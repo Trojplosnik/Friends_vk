@@ -40,8 +40,6 @@ def request(sock: ssl.SSLSocket, req: str) -> list[tuple[str, str, str]]:
         recv_data = sock.recv(1024)
         result += recv_data
     friends = re.findall(regex, result.decode("utf-8"))
-    if not friends:
-        print('User has no friends :(')
     return friends
 
 
@@ -88,8 +86,11 @@ def find_friends(user_id: str) -> list[tuple[str, str, str]]:
 
 
 def print_friends(friends: list[tuple[str, str, str]]):
-    for number, friend in enumerate(friends):
-        print(f"{number + 1}){friend[1]} {friend[2]}, ID: {friend[0]}")
+    if not friends:
+        print('User has no friends :(')
+    else:
+        for number, friend in enumerate(friends):
+            print(f"{number + 1}) {friend[1]} {friend[2]}, ID: {friend[0]}")
 
 
 def main():
